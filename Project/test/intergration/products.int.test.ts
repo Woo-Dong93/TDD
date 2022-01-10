@@ -1,6 +1,7 @@
-const request = require("supertest");
-const app = require("../../server");
-const newProduct = require("../data/new-product.json");
+import request from "supertest";
+import moongose from "mongoose";
+import app from "../../src/server";
+import newProduct from "../data/new-product.json";
 
 it("POST /api", async () => {
   // body 값과 함께 request 요청
@@ -15,6 +16,7 @@ it("POST /api", async () => {
 it("should return 500 on POST /api", async () => {
   // 에러 발생을 위해 잘못된 body 값을 전송합니다.
   const response = await request(app).post("/api").send({ name: "computer" });
+
   const errorMessage =
     "Product validation failed: description: Path `description` is required.";
 
@@ -23,4 +25,8 @@ it("should return 500 on POST /api", async () => {
   expect(response.body).toStrictEqual({
     message: errorMessage,
   });
+});
+
+afterAll(async () => {
+  await moongose.connection.close();
 });
