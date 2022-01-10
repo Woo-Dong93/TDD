@@ -2,7 +2,8 @@ import express, { Request, Response, NextFunction } from "express";
 import moongose from "mongoose";
 import router from "./routes";
 
-const url = "mongodb URL";
+const url =
+  "mongodb://localhost:27017/products?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false";
 
 moongose
   .connect(url)
